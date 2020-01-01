@@ -1,0 +1,587 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+;====================================================|
+;						     |
+;			COLORS			     |
+;						     |
+;====================================================|
+
+[colors]
+;background = ${xrdb:color0:#222}
+;background = #273030
+;background = rgba(39, 48, 48, 200)
+;background = #1A273030
+background = #3c3c3d
+;#252323
+background-alt = #56678c
+;#70798c
+;foreground = ${xrdb:color7:#222}
+foreground = #f5f1ed
+foreground-alt = #a89b92
+primary = #e8eef2
+secondary = #70798c
+alert = #cfffb3
+mount = #c9c6c2
+redalpha = #99ed5850
+
+
+;====================================================|
+;						     |
+;			BAR			     |
+;						     |
+;====================================================|
+
+[bar/bar]
+monitor = ${env:MONITOR:LVDS-1}
+width = 100%
+height = 27
+;offset-x = 1%
+;offset-y = 1%
+;radius = 0
+fixed-center = true
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #ffffff
+border-left-size = 0
+border-right-size = 0
+border-bottom-size = 0
+border-bottom-color = #00
+
+padding-left = 1
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+;font-0 = fixed:pixelsize=10;1
+font-0 = cantarell:pixelsize=9;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+font-3 = FontAwesome:size=11;0
+font-4 = Material\-Design\-Iconic\-Font:size=11;0
+font-5 = FontAwesome:size=9;0
+font-6 = cantarell:size=8;1
+font-7 = FontAwesome:size=10;0
+;font-8 = Noto\ Color\ Emoji:size=10;1
+;font-9 = Twitter\ Color\ Emoji:size=2;0
+
+
+modules-left = bspwm
+modules-center = spotify 
+modules-right = filesystem memory cpu temperature battery eth pulseaudio date
+
+
+tray-position = ${env:TRAY_POS}
+tray-padding = 2
+tray-transparent = false
+tray-background = #00273030
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = default
+
+;====================================================|
+;						     |
+;			xwindow			     |
+;						     |
+;====================================================|
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+
+;====================================================|
+;						     |
+;			xkeyboard		     |
+;						     |
+;====================================================|
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-underline = ${colors.secondary}
+
+label-layout = %{T5} %{T-} %layout%
+label-layout-underline = ${colors.secondary}
+label-layout-padding-right = 1
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+
+
+;====================================================|
+;						     |
+;			filesystem		     |
+;						     |
+;====================================================|
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#c9c6c2}%mountpoint%%{F-}: %free%
+label-mounted-underline = #fff
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+
+;====================================================|
+;						     |
+;			spotify			     |
+;						     |
+;    https://github.com/Jvanrhijn/polybar-spotify    |
+;====================================================|
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix =
+format = %{T6}  %{T-} <label>
+exec = python3 ~/.bin/scripts/polybar-spotify/spotify_status.py -f '{artist} - {song}'
+format-underline = #1db954
+
+;====================================================|
+;                                                    |
+;                       bspwm	                     |
+;                                                    |
+;====================================================|
+
+[module/bspwm]
+type = internal/bspwm
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+label-focused = %icon%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 2
+
+label-occupied = %icon%
+label-occupied-padding = 2
+
+label-unfocused = %icon%
+label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+
+label-urgent = %icon%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+label-empty = 
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 2
+
+
+
+;====================================================|
+;			ws-icons		     |
+;====================================================|
+
+;ws-icons
+ws-icon-0 = I;%{F#f26430}%{T4}%{F-}%{T-}
+ws-icon-1 = II;%{F#00c943}%{T4}%{F-}%{T-}
+ws-icon-2 = III;%{F#d8d8da}%{T4}%{F-}%{T-}
+ws-icon-3 = IV;%{F#f2c685}%{T4}%{F-}%{T-}
+ws-icon-4 = V;%{F#009ddc}%{T4}%{F-}%{T-}
+ws-icon-5 = VI;%{F#fff}%{T4}%{F-}%{T-}
+ws-icon-6 = VII;%{F#efcca0}%{T4}%{F-}%{T-}
+ws-icon-7 = VIII;%{F#928dc4}%{T5}%{F-}%{T-}
+ws-icon-8 = IX;%{F#993a3a}%{T4}%{F-}%{T-}
+ws-icon-9 = X;%{F#987284}%{T4}%{F-}%{T-}
+
+
+;====================================================|
+;						     |
+;			i3			     |
+;						     |
+;====================================================|
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+;label-focused = %index%
+label-focused = %icon%
+;label-focused-foreground = #00c943
+label-focused-background = ${module/bspwm.label-focused-background}
+label-focused-underline = ${module/bspwm.label-focused-underline}
+label-focused-padding = ${module/bspwm.label-focused-padding}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %icon%
+label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %icon%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %icon%
+label-urgent-background = ${module/bspwm.label-urgent-background}
+label-urgent-padding = ${module/bspwm.label-urgent-padding}
+
+; Separator in between workspaces
+;label-separator = |
+
+;====================================================|
+;						     |
+;			mpd			     |
+;						     |
+;====================================================|
+
+[module/mpd]
+type = internal/mpd
+label-song = %artist% - %title%
+format-online = <label-song> <icon-prev> <toggle> <icon-next>
+
+icon-prev = %{T5}  %{T-}
+icon-stop = %{T5}  %{T-}
+icon-play = %{T5}  %{T-}
+icon-pause = %{T5}  %{T-}
+icon-next = %{T5}  %{T-}
+
+label-song-maxlen = 0
+label-song-ellipsis = true
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = BL
+
+bar-width = 10
+bar-indicator = |
+bar-indicator-foreground = #ff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.foreground-alt}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #f90000
+label = CPU: %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #4bffdc
+label = %{T5} %{T-}: %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface = wlo1
+interval = 3.0
+
+format-connected = <label-connected>
+format-connected-underline = #9f78e1
+label-connected = %{T6} %{T-}%essid% %{T7}%signal%%%{T-}
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+
+ramp-signal-0 = 😍
+ramp-signal-1 = 😍
+ramp-signal-2 = 😍
+ramp-signal-3 = 😍
+ramp-signal-4 = 😍
+ramp-signal-foreground = ${colors.foreground}
+;${colors.foreground-alt}
+
+[module/temperature]
+type = internal/temperature
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 1
+
+; Thermal zone to use
+; To list all the zone types, run 
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 85
+
+; Whether or not to show units next to the temperature tokens (°C, °F) (unreleased)
+; Default: true
+units = true
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+format = <ramp> <label>
+
+; Available tags:
+;   <label-warn> (default)
+;   <ramp>
+format-warn = <ramp> <label-warn>
+
+; Available tokens:
+;   %temperature% (default, in °C)
+;   %temperature-c%   (temperature, in °C)
+;   %temperature-f%   (temperature, in °F)
+label = %temperature%
+
+; Available tokens:
+;   %temperature% (default, in °C)
+;   %temperature-c%   (temperature, in °C)
+;   %temperature-f%   (temperature, in °F)
+label-warn = %temperature%
+label-warn-foreground = #f00
+
+format-underline = #f90000
+
+; Requires the <ramp> tag
+; The icon selection will range from 0 to `warn-temperature`
+; with the current temperature as index.
+ramp-0 = %{T8}  %{T-}
+ramp-1 = %{T8}  %{T-}
+ramp-2 = %{T8}  %{T-}
+ramp-4 = %{T8}  %{T-}
+ramp-5 = %{T8}  %{T-}
+ramp-foreground = #fff
+
+
+[module/eth]
+type = internal/network
+interface = enp5s0
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = eth  %{T5} %{T-}
+
+;format-disconnected =
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = %a %d.%m.%y
+date-alt = "%a %d.%m.%y"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #0a6cf5
+
+label =  %date% - %time%
+
+;######################
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+sink = alsa_output.pci-0000_04_00.0.analog-stereo
+
+format-volume = <ramp-volume> <label-volume>
+format-volume-underline = #187b99
+;<bar-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+ramp-volume-0 = %{T8} %{T-}
+ramp-volume-1 = %{T8} %{T-}
+ramp-volume-2 = %{T8} %{T-}
+ramp-volume-3 = %{T8} %{T-}
+ramp-volume-4 = %{T8} %{T-}
+ramp-volume-5 = %{T8} %{T-}
+
+;label-muted = 🔇 muted
+label-muted = %{T8} %{T-} %percentage%%
+label-muted-foreground = #99ed5850
+label-muted-underline = ${colors.alert}
+
+[module/volume]
+type = internal/volume
+
+master-soundcard = default
+master-mixer = Master
+
+format-volume = <ramp-volume> <label-volume>
+format-volume-underline = #187b99
+;<bar-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+ramp-volume-0 = %{T8} %{T-}
+ramp-volume-1 = %{T8} %{T-}
+ramp-volume-2 = %{T8} %{T-}
+ramp-volume-3 = %{T8} %{T-}
+ramp-volume-4 = %{T8} %{T-}
+ramp-volume-5 = %{T8} %{T-}
+
+
+;label-muted = 🔇 muted
+label-muted = %{T8} %{T-} %percentage%%
+label-muted-foreground = #99ed5850
+label-muted-underline = ${colors.alert}
+
+
+;######################
+;######################
+;######################
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+;format-charging-underline = #ffb52a
+format-charging-underline = #50ed5d
+format-charging-padding = 2
+
+label-charging = %percentage%%
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = #ed5850
+;${self.format-charging-underline}
+format-discharging-padding = 2
+
+label-discharging = %percentage%%
+;label-discharging-background = #f442a7
+
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-underline = ${self.format-charging-underline}
+
+;ramp-capacity-0 = 
+ramp-capacity-0 = %{F#ed5850}%{T8}  %{T-}%{F-}
+ramp-capacity-1 = %{F#ede250}%{T8}  %{T-}%{F-}
+ramp-capacity-2 = %{F#aeed50}%{T8}  %{T-}%{F-}
+ramp-capacity-3 = %{F#50ed5d}%{T8}  %{T-}%{F-}
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = %{F#50ed5d}%{T8}  %{T-}%{F-}
+animation-charging-1 = %{F#50ed5d}%{T8}  %{T-}%{F-}
+animation-charging-2 = %{F#50ed5d}%{T8}  %{T-}%{F-}
+animation-charging-3 = %{F#50ed5d}%{T8}  %{T-}%{F-}
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 650
+
+;######################
+;######################
+;######################
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.secondary}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+
+
+; vim:ft=dosini
