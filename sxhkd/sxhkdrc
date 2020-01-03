@@ -16,7 +16,7 @@ super + shift + p
 
 # lock screen
 super + shift + x
-	xsecurelock
+	env XSECURELOCK_FONT="JoyPixel:Regular" XSECURELOCK_AUTH_BACKGROUND_COLOR="Brown" XSECURELOCK_AUTH_FOREGROUND_COLOR="Pink" XSECURELOCK_DIM_ALPHA=90 XSECURELOCK_PASSWORD_PROMPT=emoji XSECURELOCK_LIST_VIDEOS_COMMAND="find ~/Videos/lock -type f" XSECURELOCK_SAVER=saver_mpv xsecurelock
 
 # make sxhkd reload its configuration files:
 super + Escape
