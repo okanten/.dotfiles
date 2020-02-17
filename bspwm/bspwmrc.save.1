@@ -4,15 +4,10 @@
 sxhkd &
 bash ~/.config/polybar/launch &
 feh --bg-fill ~/Pictures/wp.png &
-#/usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 60.02 --left-of DVI-I-1 --output DVI-I-1 --mode 1920x1080 --rate 144.00 &
-conky &
-#compton --config ~/.config/compton/config --backend glx --paint-on-overlay --vsync &
-xset r rate 250 60 &
+/usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 60.02 --left-of DVI-I-1 --output DVI-I-1 --mode 1920x1080 --rate 144.00 &
 
-picom --config ~/.config/picom/config --backend glx --paint-on-overlay --vsync &
-
-bspc monitor DVI-I-1 -d I II III IV VI
-bspc monitor HDMI-0 -d V VII VIII IX X
+bspc monitor HDMI-0 -d VII VIII IX X
+bspc monitor center DVI-I-1 -d I II III IV V VI
 
 
 bspc config border_width         2

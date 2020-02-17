@@ -1,3 +1,4 @@
+
 # Lines starting with # are comments
 
 # Always extract audio
@@ -10,5 +11,7 @@
 #--proxy 127.0.0.1:3128
 
 # Save all videos under Movies directory in your home directory
--f bestvideo+bestaudio/best -o ~/Videos/%(title)s.%(ext)s
-
+#-f bestvideo+bestaudio/best -o ~/Videos/%(title)s.%(ext)s #--all-subs --embed-subs --write-auto-sub -o ~/Videos/dunkey-league/%(title)s.%(ext)s
+-f bestvideo+bestaudio/best -o ./%(title)s.%(ext)s #-o ~/Videos/%(title)s.%(ext)s
+#-f bestvideo+bestaudio/best -o /run/media/anon/share/Kodi/series/Skam.ENGSUB.HC/%(title)s.%(ext)s
+#-f bestvideo+bestaudio/best -o /run/media/anon/share/Kodi/completed/Brennpunkt/%(series)s.S%(playlist_index)s.E%(autonumber)s.%(title)s.%(ext)s --all-subs --embed-subs --write-auto-sub #-o ~/Videos/dunkey-league/%(title)s.%(ext)s

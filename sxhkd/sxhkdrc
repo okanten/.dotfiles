@@ -16,7 +16,7 @@ super + shift + p
 
 # lock screen
 super + shift + x
-	env XSECURELOCK_FONT="JoyPixel:Regular" XSECURELOCK_AUTH_BACKGROUND_COLOR="Brown" XSECURELOCK_AUTH_FOREGROUND_COLOR="Pink" XSECURELOCK_DIM_ALPHA=90 XSECURELOCK_PASSWORD_PROMPT=emoji XSECURELOCK_LIST_VIDEOS_COMMAND="find ~/Videos/lock -type f" XSECURELOCK_SAVER=saver_mpv xsecurelock
+	xsecurelock
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -138,15 +138,15 @@ super + {Left,Down,Up,Right}
 #
 
 # playback control
-super + {F2, F3, F4}
+XF86Audio{Stop,Next,Prev}
 	python ~/.bin/scripts/MediaControlSwitch/mediacontrol.py {pause, next, prev}
 
 # volume
 XF86Audio{Lower,Raise}Volume
-	pactl set-sink-volume 0 {-5%,+5%}
+	pactl set-sink-volume 2 {-5%,+5%}
 
 XF86AudioMute
-	pactl set-sink-mute 0 toggle
+	pactl set-sink-mute 2 toggle
 
 #
 # Display
@@ -154,3 +154,12 @@ XF86AudioMute
 
 XF86MonBrightness{Up, Down}
 	xbacklight {-inc, -dec} 20
+
+super + bracket{left,right}
+  desk=`bspc query -D -d focused`; \
+  bspc desktop -m {prev,next}; \
+  bspc monitor -f {prev,next}; \
+  bspc desktop -f $desk
+
+@Print
+	selfhost-img
